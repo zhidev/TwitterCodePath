@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onLogin(sender: AnyObject) {
-        //TwitterClient.sharedInstance.loginWithBlock()
+        //®TwitterClient.sharedInstance.loginWithBlock()
         
         
         TwitterClient.sharedInstance.requestSerializer.removeAccessToken()
