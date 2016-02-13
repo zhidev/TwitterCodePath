@@ -27,10 +27,43 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="WeG-py-ULE" kind="modal" identifier="loginSegue" id="UwS-Wp-QpQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="149.86666666666667" y="333.69999999999999"/>
+            <point key="canvasLocation" x="-126" y="194"/>
+        </scene>
+        <!--Tweets View Controller-->
+        <scene sceneID="p9b-LL-hFW">
+            <objects>
+                <viewController storyboardIdentifier="TweetsViewController" id="WeG-py-ULE" customClass="TweetsViewController" customModule="TwitterClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cAz-P5-V43"/>
+                        <viewControllerLayoutGuide type="bottom" id="ONN-Un-8Jd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AVv-Fj-CO7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNg-EM-sH1">
+                                <rect key="frame" x="136" y="230" width="48" height="30"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="onLogout:" destination="WeG-py-ULE" eventType="touchDown" id="DvE-Vs-aOr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="logoutButton" destination="uNg-EM-sH1" id="XA7-0i-n5b"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MO1-eK-Wmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="271" y="194"/>
         </scene>
     </scenes>
 </document>
