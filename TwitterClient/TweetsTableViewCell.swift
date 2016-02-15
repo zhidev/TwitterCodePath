@@ -17,11 +17,15 @@ class TweetsTableViewCell: UITableViewCell {
     @IBOutlet var timeLabel: UILabel!
     
     
+    @IBOutlet var retweetButton: UIButton!
+    @IBOutlet var favoriteButton: UIButton!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        tweetPic.layer.cornerRadius = 3
+        tweetPic.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -29,6 +33,21 @@ class TweetsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    var tweet: Tweet! {
+        didSet{
+            tweetView.text = tweet.text
+            tweetPic.setImageWithURL( (NSURL(string: (tweet.user?.profileImageURL!)!))! )
+            nameLabel.text = tweet.user?.name
+            let usernameText = "@" + (tweet.user?.screenName)!
+            usernameLabel.text =  (usernameText)
+            timeLabel.text = calculateTimestamp(tweet.createdAt!.timeIntervalSinceNow)
+            
+            
+        }
+    }
+    
+    
 
     func calculateTimestamp(tweetTime: NSTimeInterval) -> String {
         //Turn tweetTime into sec, min, hr , days, yrs
@@ -41,23 +60,32 @@ class TweetsTableViewCell: UITableViewCell {
         // Find time ago
         if (time <= 60) { // SECONDS
             timeAgo = time
-            timeChar = "secs"
+            timeChar = "sec"
         } else if ((time/60) <= 60) { // MINUTES
             timeAgo = time/60
-            timeChar = "mins"
+            timeChar = "min"
         } else if (time/60/60 <= 24) { // HOURS
             timeAgo = time/60/60
-            timeChar = "hrs"
+            timeChar = "hr"
         } else if (time/60/60/24 <= 365) { // DAYS
             timeAgo = time/60/60/24
-            timeChar = "days"
+            timeChar = "day"
         } else if (time/(3153600) <= 1) { // YEARS
             timeAgo = time/60/60/24/365
-            timeChar = "years"
+            timeChar = "yr"
         }
         //format string
         return "\(timeAgo)\(timeChar) ago"
     }
+    
+    @IBAction func retweet(sender: AnyObject) {
+    }
+    
+    
+    
+    @IBAction func favorite(sender: AnyObject) {
+    }
+    
     
     
 }

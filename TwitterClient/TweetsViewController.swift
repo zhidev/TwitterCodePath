@@ -46,15 +46,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetsTableViewCell
-        let display = tweets![indexPath.row]
-        cell.tweetView.text = display.text
-        cell.tweetPic.setImageWithURL( (NSURL(string: (display.user?.profileImageURL!)!))! )
-        cell.nameLabel.text = display.user?.name
-        let usernameText = "@" + (display.user?.screenName)!
-        cell.usernameLabel.text =  (usernameText)
-        cell.timeLabel.text = cell.calculateTimestamp(display.createdAt!.timeIntervalSinceNow)
-        
-        
+        cell.tweet = tweets![indexPath.row]
         
         return cell
     }
