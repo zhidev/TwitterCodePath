@@ -21,12 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
-        print("Kappa")
-        print("USER.currentUSER : \(User.currentUser)")
+
         if User.currentUser != nil {
-            print("Keepo")
-            // Go to the logged in screen
-            print("%@Current user detected: \(User.currentUser?.name)")
+
             var vc = storyboard.instantiateViewControllerWithIdentifier("InNavController") as! UINavigationController
             window?.rootViewController = vc
             print("%@121Current user detected: \(User.currentUser?.name)")
