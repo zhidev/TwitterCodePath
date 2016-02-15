@@ -20,6 +20,12 @@ class TweetsTableViewCell: UITableViewCell {
     @IBOutlet var retweetButton: UIButton!
     @IBOutlet var favoriteButton: UIButton!
     
+    @IBOutlet var retweetCount: UILabel!
+    @IBOutlet var favoriteCount: UILabel!
+    
+    
+    
+    
     var tweetID: String?
     
     override func awakeFromNib() {
@@ -43,8 +49,19 @@ class TweetsTableViewCell: UITableViewCell {
             let usernameText = "@" + (tweet.user?.screenName)!
             usernameLabel.text =  (usernameText)
             timeLabel.text = calculateTimestamp(tweet.createdAt!.timeIntervalSinceNow)
-            tweetID = tweet.id
             
+            
+            tweetID = tweet.id
+            retweetCount.text = String(tweet.retweetCount)
+            favoriteCount.text = String(tweet.heartCount)
+            
+            
+            
+            retweetCount.text! == "0" ? (retweetCount.hidden = true) : (retweetCount.hidden = false)
+            favoriteCount.text! == "0" ? (favoriteCount.hidden = true) : (favoriteCount.hidden = false)
+            
+            retweetCount.text! = retweetCount.text!
+            favoriteCount.text! = favoriteCount.text!
         }
     }
     
@@ -84,6 +101,15 @@ class TweetsTableViewCell: UITableViewCell {
         TwitterClient.sharedInstance.retweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
             print("////////////retweet func being called from within tableviewcell///////////")
             
+            if self.retweetCount.text! > "0"{
+                self.retweetCount.text = String(self.tweet.retweetCount + 1)
+            }else{
+                self.retweetCount.hidden = false
+                self.retweetCount.text = String(self.tweet.retweetCount + 1)
+            }
+            
+            
+            
         })//end retweet
     }//end retweet func
     
@@ -93,6 +119,14 @@ class TweetsTableViewCell: UITableViewCell {
         print("///////////////favorite button clicked//////")
         TwitterClient.sharedInstance.favorited(Int(tweetID!)!, params: nil, completion: {(error) -> () in
             print("//////FAVORITED/////////")
+            
+            if self.favoriteCount.text! > "0" {
+                self.favoriteCount.text = String(self.tweet.heartCount + 1)
+            }else{
+                self.favoriteCount.hidden = false
+                self.favoriteCount.text = String(self.tweet.heartCount + 1)
+            }
+        
         })
     
     
