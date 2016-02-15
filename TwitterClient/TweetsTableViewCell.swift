@@ -20,6 +20,7 @@ class TweetsTableViewCell: UITableViewCell {
     @IBOutlet var retweetButton: UIButton!
     @IBOutlet var favoriteButton: UIButton!
     
+    var tweetID: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,7 +43,7 @@ class TweetsTableViewCell: UITableViewCell {
             let usernameText = "@" + (tweet.user?.screenName)!
             usernameLabel.text =  (usernameText)
             timeLabel.text = calculateTimestamp(tweet.createdAt!.timeIntervalSinceNow)
-            
+            tweetID = tweet.id
             
         }
     }
@@ -79,11 +80,22 @@ class TweetsTableViewCell: UITableViewCell {
     }
     
     @IBAction func retweet(sender: AnyObject) {
-    }
+        print("///////////////retweet button clicked/////////////////")
+        TwitterClient.sharedInstance.retweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
+            print("////////////retweet func being called from within tableviewcell///////////")
+            
+        })//end retweet
+    }//end retweet func
     
     
     
     @IBAction func favorite(sender: AnyObject) {
+        print("///////////////favorite button clicked//////")
+        TwitterClient.sharedInstance.favorited(Int(tweetID!)!, params: nil, completion: {(error) -> () in
+            print("//////FAVORITED/////////")
+        })
+    
+    
     }
     
     
