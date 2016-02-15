@@ -22,16 +22,16 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
+        //set our nav title to user's screen name
+        self.navigationItem.title = User.currentUser?.screenName
+        
         
         // Do any additional setup after loading the view.
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) ->() in
             self.tweets = tweets
             self.tableView.reloadData()
-            print("&%&&%&%&&%&%&%&%&%&&%&%&%&%&%&&%&%&%&%&%&&%")
-            print("Tweets: \(tweets)")
-
+            //Update tableview when we get tweets to populate our tableView
         })
-        print("Tweets: \(tweets)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,8 +46,16 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetsTableViewCell
-        cell.tweetView.text = tweets![indexPath.row].text
-        //print(tweets![indexPath.row].text)
+        let display = tweets![indexPath.row]
+        cell.tweetView.text = display.text
+        cell.tweetPic.setImageWithURL( (NSURL(string: (display.user?.profileImageURL!)!))! )
+        cell.nameLabel.text = display.user?.name
+        let usernameText = "@" + (display.user?.screenName)!
+        cell.usernameLabel.text =  (usernameText)
+        cell.timeLabel.text = cell.calculateTimestamp(display.createdAt!.timeIntervalSinceNow)
+        
+        
+        
         return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
