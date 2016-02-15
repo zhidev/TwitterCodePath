@@ -99,15 +99,18 @@ class TweetsTableViewCell: UITableViewCell {
     @IBAction func retweet(sender: AnyObject) {
         print("///////////////retweet button clicked/////////////////")
         TwitterClient.sharedInstance.retweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
+            self.retweetButton.setImage(UIImage(named: "retweet-action-on-green.png"), forState: UIControlState.Selected)
+
             print("////////////retweet func being called from within tableviewcell///////////")
-            
-            if self.retweetCount.text! > "0"{
-                self.retweetCount.text = String(self.tweet.retweetCount + 1)
-            }else{
-                self.retweetCount.hidden = false
-                self.retweetCount.text = String(self.tweet.retweetCount + 1)
+            let data = NSUserDefaults.standardUserDefaults().boolForKey(change)
+            if data{
+                if self.retweetCount.text! > "0"{
+                    self.retweetCount.text = String(self.tweet.retweetCount + 1)
+                }else{
+                    self.retweetCount.hidden = false
+                    self.retweetCount.text = String(self.tweet.retweetCount + 1)
+                }
             }
-            
             
             
         })//end retweet
@@ -119,13 +122,15 @@ class TweetsTableViewCell: UITableViewCell {
         print("///////////////favorite button clicked//////")
         TwitterClient.sharedInstance.favorited(Int(tweetID!)!, params: nil, completion: {(error) -> () in
             print("//////FAVORITED/////////")
+            self.favoriteButton.setImage(UIImage(named: "like-action-on-red.png"), forState: UIControlState.Selected)
+
+                if self.favoriteCount.text! > "0" {
+                    self.favoriteCount.text = String(self.tweet.heartCount + 1)
+                }else{
+                    self.favoriteCount.hidden = false
+                    self.favoriteCount.text = String(self.tweet.heartCount + 1)
+                }
             
-            if self.favoriteCount.text! > "0" {
-                self.favoriteCount.text = String(self.tweet.heartCount + 1)
-            }else{
-                self.favoriteCount.hidden = false
-                self.favoriteCount.text = String(self.tweet.heartCount + 1)
-            }
         
         })
     

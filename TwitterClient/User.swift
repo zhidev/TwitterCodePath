@@ -88,8 +88,7 @@ class User: NSObject {
                 catch _{
                     NSUserDefaults.standardUserDefaults().setObject(nil, forKey: currentUserKey)
                 }
-                NSUserDefaults.standardUserDefaults().synchronize()
-
+    
                 
             }
         }
