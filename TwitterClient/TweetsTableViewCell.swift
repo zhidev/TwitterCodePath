@@ -99,7 +99,7 @@ class TweetsTableViewCell: UITableViewCell {
     @IBAction func retweet(sender: AnyObject) {
         print("///////////////retweet button clicked/////////////////")
         TwitterClient.sharedInstance.retweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
-            self.retweetButton.setImage(UIImage(named: "retweet-action-on-green.png"), forState: UIControlState.Selected)
+
 
             print("////////////retweet func being called from within tableviewcell///////////")
             let data = NSUserDefaults.standardUserDefaults().boolForKey(change)
@@ -122,7 +122,7 @@ class TweetsTableViewCell: UITableViewCell {
         print("///////////////favorite button clicked//////")
         TwitterClient.sharedInstance.favorited(Int(tweetID!)!, params: nil, completion: {(error) -> () in
             print("//////FAVORITED/////////")
-            self.favoriteButton.setImage(UIImage(named: "like-action-on-red.png"), forState: UIControlState.Selected)
+
 
                 if self.favoriteCount.text! > "0" {
                     self.favoriteCount.text = String(self.tweet.heartCount + 1)
