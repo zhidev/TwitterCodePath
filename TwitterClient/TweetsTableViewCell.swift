@@ -62,6 +62,25 @@ class TweetsTableViewCell: UITableViewCell {
             
             retweetCount.text! = retweetCount.text!
             favoriteCount.text! = favoriteCount.text!
+            
+            
+            //============ testing passive button colors================
+            print("+++++++++++++++++\(tweet.text!)+++++++")
+            print("+++++++++++++++++\(tweet.didRetweet)+++++++")
+            print("+++++++++++++++++\(tweet.didFavorite)+++++++")
+
+            if(tweet.didRetweet){
+                print("RETWEET COLORED")
+                self.retweetButton.setBackgroundImage(UIImage(named: "retweet-action-on-green.jpg"), forState: UIControlState.Normal)
+            }else{
+                self.retweetButton.setBackgroundImage(UIImage(named: "retweet-action_default.jpg"), forState: UIControlState.Normal)
+            }//end retweet
+            if(tweet.didFavorite){
+                print("FAVORITE COLORED")
+                self.favoriteButton.setBackgroundImage(UIImage(named: "like-action-on-red.jpg"), forState: UIControlState.Normal)
+            }else{
+                self.favoriteButton.setBackgroundImage(UIImage(named: "like-action-off.jpg"), forState: UIControlState.Normal)
+            }//end favorite
         }
     }
     
@@ -102,14 +121,18 @@ class TweetsTableViewCell: UITableViewCell {
 
 
             print("////////////retweet func being called from within tableviewcell///////////")
-            let data = NSUserDefaults.standardUserDefaults().boolForKey(change)
-            if data{
-                if self.retweetCount.text! > "0"{
-                    self.retweetCount.text = String(self.tweet.retweetCount + 1)
-                }else{
-                    self.retweetCount.hidden = false
-                    self.retweetCount.text = String(self.tweet.retweetCount + 1)
-                }
+            if(!self.tweet.didRetweet){
+                let data = NSUserDefaults.standardUserDefaults().boolForKey(rchange)
+                if data{
+                    if self.retweetCount.text! > "0"{
+                        self.retweetCount.text = String(self.tweet.retweetCount + 1)
+                    }else{
+                        self.retweetCount.hidden = false
+                        self.retweetCount.text = String(self.tweet.retweetCount + 1)
+                    }
+                    self.retweetButton.setBackgroundImage(UIImage(named: "retweet-action-on-green.jpg"), forState: UIControlState.Normal)
+                }//end if data
+                
             }
             
             
@@ -123,14 +146,18 @@ class TweetsTableViewCell: UITableViewCell {
         TwitterClient.sharedInstance.favorited(Int(tweetID!)!, params: nil, completion: {(error) -> () in
             print("//////FAVORITED/////////")
 
-
+            if(!self.tweet.didFavorite){ //if they did favorite then this shouldnt run because its already favorited, 
+                //else increment
                 if self.favoriteCount.text! > "0" {
                     self.favoriteCount.text = String(self.tweet.heartCount + 1)
                 }else{
                     self.favoriteCount.hidden = false
                     self.favoriteCount.text = String(self.tweet.heartCount + 1)
                 }
-            
+                self.favoriteButton.setBackgroundImage(UIImage(named: "like-action-on-red.jpg"), forState: UIControlState.Normal)
+                //print("+++++++++++++++++\(self.tweet.text)+++++++")
+
+            }
         
         })
     

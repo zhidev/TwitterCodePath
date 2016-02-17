@@ -13,7 +13,8 @@ let twitterConsumerKey = "Tnkadfje7scDK8fadid0kNmRd"
 let twitterConsumerSecret = "zMeHFJEXElYf5BX8L5FlavUavsgzsX5A8rd3tXFiHXxjBGWZRc"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
 
-let change = "true"
+let rchange = "true"
+let fchange = "true"
 
 
 class TwitterClient: BDBOAuth1SessionManager{
@@ -90,13 +91,13 @@ class TwitterClient: BDBOAuth1SessionManager{
     func retweet(id: Int, params: NSDictionary?, completion: (error: NSError?) -> () ){
         POST("1.1/statuses/retweet/\(id).json", parameters: params, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
             print("Retweeted tweet with id: \(id)")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: change)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: rchange)
             NSUserDefaults.standardUserDefaults().synchronize()
             completion(error: nil)
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
                 print("Couldn't retweet")
                 print(error)
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: change)
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: rchange)
                 NSUserDefaults.standardUserDefaults().synchronize()
 
                 completion(error: error)
@@ -108,12 +109,12 @@ class TwitterClient: BDBOAuth1SessionManager{
     func favorited(id: Int, params: NSDictionary?, completion: (error: NSError?) -> () ){
         POST("1.1/favorites/create.json?id=\(id)", parameters: params, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
             print("Liked tweet with id: \(id)")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: change)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: fchange)
             NSUserDefaults.standardUserDefaults().synchronize()
             completion(error: nil)
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
                 print("Couldn't like tweet")
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: change)
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: fchange)
                 NSUserDefaults.standardUserDefaults().synchronize()
                 completion(error: error)
             }) //end POST
