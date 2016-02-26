@@ -16,6 +16,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     var tweets: [Tweet]?
     var refreshControl: UIRefreshControl!
     
+    //var isMoreDataLoading = false
+    
+    //var loadMoreOffset = 20
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,6 +61,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let tweets = self.tweets {
+            print("/////////////////TWEETS : \(tweets.count) /////////////////")
             return tweets.count
         }
         return 0
@@ -74,4 +79,54 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         refreshControl.endRefreshing()
     }
+    //Infinite scroll
+/*    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                
+                // ... Code to load more results ...
+                loadMoreData()
+            }
+            
+        }
+    }
+    
+
+    func loadMoreData(){
+
+        
+        let twitterApiMore = ["since_id":self.loadMoreOffset, "count": 20 ]
+        TwitterClient.sharedInstance.homeTimelineWithParams(twitterApiMore, completion: { (tweets, error) ->() in
+            if error != nil{
+                print("LOAD MORE DATA ERROR")
+            }else{
+                print("LOADING DATA")
+                self.delay(0.5, closure: { Void in
+                    self.loadMoreOffset += 20
+                    self.tweets?.appendContentsOf(tweets!)
+                    self.tableView.reloadData()
+                    self.isMoreDataLoading = false
+                })
+            }
+        })
+        
+        
+    }
+    func delay(delay: Double, closure: () -> () ) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure
+        )
+    }*/
+    
 }

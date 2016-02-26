@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if User.currentUser != nil {
 
-            var vc = storyboard.instantiateViewControllerWithIdentifier("InNavController") as! UINavigationController
+            let vc = storyboard.instantiateViewControllerWithIdentifier("InNavController") as! UINavigationController
             window?.rootViewController = vc
             print("%@121Current user detected: \(User.currentUser?.name)")
 
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func userDidLogout(){
-        var vc = storyboard.instantiateInitialViewController()! as UIViewController
+        let vc = storyboard.instantiateInitialViewController()! as UIViewController
         window?.rootViewController = vc
     }
     

@@ -117,11 +117,12 @@ class TweetsTableViewCell: UITableViewCell {
     
     @IBAction func retweet(sender: AnyObject) {
         print("///////////////retweet button clicked/////////////////")
-        TwitterClient.sharedInstance.retweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
+        if(!self.tweet.didRetweet){ //if it didnt retweet yet
+            TwitterClient.sharedInstance.retweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
 
 
             print("////////////retweet func being called from within tableviewcell///////////")
-            if(!self.tweet.didRetweet){
+            //if(!self.tweet.didRetweet){
                 let data = NSUserDefaults.standardUserDefaults().boolForKey(rchange)
                 if data{
                     if self.retweetCount.text! > "0"{
@@ -130,38 +131,71 @@ class TweetsTableViewCell: UITableViewCell {
                         self.retweetCount.hidden = false
                         self.retweetCount.text = String(self.tweet.retweetCount + 1)
                     }
+                    self.tweet.didRetweet = !self.tweet.didRetweet
                     self.retweetButton.setBackgroundImage(UIImage(named: "retweet-action-on-green.jpg"), forState: UIControlState.Normal)
                 }//end if data
                 
-            }
+            //}
             
             
-        })//end retweet
+            })//end retweet
+        }else{//end if loop for didRetweet
+            //deleting a retweet
+            TwitterClient.sharedInstance.unretweet(Int(tweetID!)!, params: nil, completion: { (error)->() in
+                if self.tweet.retweetCount > 1{
+                    self.retweetCount.text = String(self.tweet.retweetCount - 1)
+                }else{//end if retweet count >1
+                //else only 1 retweet (users) so hide everything
+                    self.retweetCount.hidden = true
+                    self.retweetCount.text = String(self.tweet.retweetCount - 1)
+                
+                }
+            })
+            self.tweet.didRetweet = !self.tweet.didRetweet
+
+            self.retweetButton.setBackgroundImage(UIImage(named: "retweet-action_default.jpg"), forState: UIControlState.Normal)
+        }
     }//end retweet func
     
     
     
     @IBAction func favorite(sender: AnyObject) {
         print("///////////////favorite button clicked//////")
+        if(!self.tweet.didFavorite){
         TwitterClient.sharedInstance.favorited(Int(tweetID!)!, params: nil, completion: {(error) -> () in
             print("//////FAVORITED/////////")
 
-            if(!self.tweet.didFavorite){ //if they did favorite then this shouldnt run because its already favorited, 
+            //if(!self.tweet.didFavorite){ //if they did favorite then this shouldnt run because its already favorited,
                 //else increment
-                if self.favoriteCount.text! > "0" {
+                if self.tweet.heartCount > 0 {
                     self.favoriteCount.text = String(self.tweet.heartCount + 1)
                 }else{
                     self.favoriteCount.hidden = false
                     self.favoriteCount.text = String(self.tweet.heartCount + 1)
                 }
-                self.favoriteButton.setBackgroundImage(UIImage(named: "like-action-on-red.jpg"), forState: UIControlState.Normal)
+            self.tweet.didFavorite = !self.tweet.didFavorite
+            self.favoriteButton.setBackgroundImage(UIImage(named: "like-action-on-red.jpg"), forState: UIControlState.Normal)
                 //print("+++++++++++++++++\(self.tweet.text)+++++++")
 
-            }
+            //}
         
         })
-    
-    
+        }else{//new end if already favorited
+            print("//////UNFAVORITING/////")
+            TwitterClient.sharedInstance.unlike(Int(tweetID!)!, params: nil, completion: { (error) -> () in
+                print("////In process of unfavoriting////")
+                if self.tweet.heartCount > 1{
+                    self.favoriteCount.text = String(self.tweet.heartCount - 1)
+                }else{
+                    self.favoriteCount.hidden = true
+                    self.favoriteCount.text = String(self.tweet.heartCount - 1)
+                }
+                self.tweet.didFavorite = !self.tweet.didFavorite
+
+                self.favoriteButton.setBackgroundImage(UIImage(named: "like-action-off.jpg"), forState: UIControlState.Normal)
+            
+            })
+        }//end else
     }
     
     

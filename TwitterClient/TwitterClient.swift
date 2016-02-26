@@ -41,6 +41,7 @@ class TwitterClient: BDBOAuth1SessionManager{
                 print("error getting home timeline")
                 completion(tweets: nil, error: error)
         })
+        
     }
     
     
@@ -121,6 +122,27 @@ class TwitterClient: BDBOAuth1SessionManager{
         print("vvvvvvvvvvvvvFAVORITED CALLED FROM TWITTER CLIENT")
     }
     
+    func unretweet(id: Int, params: NSDictionary?, completion: (error: NSError?) -> () ){
+        POST("1.1/statuses/unretweet/\(id).json", parameters: params, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
+            print("Unretweeted tweet with id: \(id)")
+            completion(error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("Couldn't unretweet")
+                completion(error: error)
+            }
+        )
+    }
     
+    func unlike(id: Int, params: NSDictionary?, completion: (error: NSError?) -> () ){
+        POST("1.1/favorites/destroy.json?id=\(id)", parameters: params, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
+            print("Unliked tweet with id: \(id)")
+            completion(error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("Couldn't unlike tweet")
+                completion(error: error)
+            }
+        )
+    }
+
     
 }
