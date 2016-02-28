@@ -128,5 +128,31 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             dispatch_get_main_queue(), closure
         )
     }*/
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("FISH CAKES")
+        performSegueWithIdentifier("DetailSegue", sender: indexPath)
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("started detailed potato")
+        print("id: \(segue.identifier!)")
+        if segue.identifier == "DetailSegue"{
+            print("WTF")
+            let indexPath = sender
+            let detailedVC = segue.destinationViewController as! DetailedViewController
+            print("WTF2")
+
+            let selected = tweets![indexPath!.row]
+            
+            print("WTF3")
+            print(selected.text)
+            print(selected.didRetweet)
+            detailedVC.newtweet = selected
+            print("detailed potato")
+        }
+        print("no detailedPotato")
+    }
+    
     
 }
