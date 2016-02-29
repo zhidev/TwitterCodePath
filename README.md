@@ -57,17 +57,17 @@ Describe any challenges encountered while building the app.
     See the License for the specific language governing permissions and
     limitations under the License.
 
-Time spent: **X** hours spent in total
+Time spent: 10hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
 - [x] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
-- [ ] Profile page:
-   - [ ] Contains the user header view
-   - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Home Timeline: Tapping on a user image should bring up that user's profile page
+- [x] Profile page:
+   - [x] Contains the user header view
+   - [x] Contains a section with the users basic stats: # tweets, # following, # followers
+- [x] Home Timeline: Tapping on a user image should bring up that user's profile page
 - [x] Compose Page: User can compose a new tweet by tapping on a compose button.
 
 The following **optional** features are implemented:
@@ -87,13 +87,17 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [ ] List anything else that you can get done to improve the app functionality!
-- [ ] In compose view controller, something that keeps track of how much text has been entered. [Use delegate to increment text count] Max of 140.
+- [ ] In compose view controller, something that keeps track of how much text has been entered. [Use delegate to increment text count] Max of 140. Jk this was an additional.
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Views with Autolayout and calling functions to set view dimensions automatically AFTER viewDidLoad but without hitting a button manually to  correctly update. (Hence automatically i suppose)
+2. Probably to make profile picture prettier refer to: https://dev.twitter.com/overview/api/users
+important notes: Theres a flag to see if theres a profile background image. I'd imagine there should be one for header, (only skimmed not too sure) So make sure to include a variable for that on Users model to not trip unwrapping an optional to nil
+3. [self] DetailedVC clear the reply text field after replying. In addition, add it onto a scroll view.
+4. Refactor things into models
+5. Refactor things into delegates.
 
 ## Video Walkthrough 
 
